@@ -1,64 +1,100 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>My Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Math Learning Games</title>
   <style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #f4f8ff;
-    text-align: center;
-    padding: 30px;
-  }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #eef2ff, #f8fafc);
+      margin: 0;
+      padding: 40px 20px;
+      text-align: center;
+    }
 
-  .container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 30px;
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+    h1 {
+      font-size: 42px;
+      margin-bottom: 35px;
+      color: #1f2937;
+    }
 
-  .card {
-    background: white;
-    border-radius: 15px;
-    overflow: hidden;
-    text-decoration: none;
-    color: black;
-    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-    transition: 0.2s;
-  }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
 
-  .card:hover {
-    transform: scale(1.03);
-  }
+    .card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      text-decoration: none;
+      color: black;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
 
-  .card img {
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-  }
+    .card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.18);
+    }
 
-  .title {
-    font-size: 20px;
-    font-weight: bold;
-    margin: 10px 0 5px;
-  }
+    .card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
 
-  .subtitle {
-    color: #666;
-    font-size: 14px;
-    margin-bottom: 15px;
-  }
-</style>
+    .card-content {
+      padding: 18px 20px 24px;
+      text-align: left;
+    }
+
+    .title {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #111827;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #6b7280;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 32px;
+      }
+
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      .card img {
+        height: 210px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>🎮 My Learning Games</h1>
+
+  <h1>🧠 Math Learning Games</h1>
+
   <div class="container">
     <a class="card" href="Multiplication.html">
-      <img src="Multiplication.png" style="width:100%; border-radius:10px;">
-      <div class="title">➕ Multiplication Game</div>
+      <img src="math-preview.png" alt="Multiplication Game Preview">
+      <div class="card-content">
+        <div class="title">➕ Multiplication Game</div>
+        <div class="subtitle">Practice multiplication with fun visual questions and interactive activities.</div>
+      </div>
     </a>
   </div>
+
 </body>
 </html>
