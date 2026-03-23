@@ -4,39 +4,50 @@
   <meta charset="UTF-8">
   <title>My Games</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f8ff;
-      text-align: center;
-      padding: 30px;
-    }
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      text-decoration: none;
-      color: black;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-    }
-    .card:hover {
-      transform: scale(1.03);
-    }
-    .emoji {
-      font-size: 50px;
-      margin-bottom: 10px;
-    }
-    .title {
-      font-size: 22px;
-      font-weight: bold;
-    }
-  </style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f4f8ff;
+    text-align: center;
+    padding: 30px;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .card {
+    width: 220px;
+    height: 220px;
+    margin: auto;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    text-decoration: none;
+    color: black;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: 0.2s;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+  }
+
+  .card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .title {
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+</style>
 </head>
 <body>
   <h1>🎮 My Learning Games</h1>
