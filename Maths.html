@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Multiplication Visual Game</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(135deg, #fff7d6, #dff7ff, #ffe4f2);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    .game {
+      width: 100%;
+      max-width: 980px;
+      background: rgba(255,255,255,0.95);
+      border-radius: 28px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+      padding: 28px;
+      position: relative;
+    }
+
+    h1 {
+      text-align: center;
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: #ff6b6b;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+      color: #444;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .pill {
+      background: #f4f7ff;
+      border: 2px solid #d8e3ff;
+      border-radius: 999px;
+      padding: 10px 18px;
+      font-weight: bold;
+      color: #334;
+    }
+
+    .card {
+      background: #fff;
+      border: 3px solid #f1f1f1;
+      border-radius: 24px;
+      padding: 24px;
+    }
+
+    .instruction {
+      text-align: center;
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #4b3f72;
+      margin-bottom: 16px;
+    }
+
+    .celebration-gif {
+      display: none;
+      justify-content: center;
+      margin: 6px 0 12px;
+    }
+
+    .celebration-gif.show {
+      display: flex;
+    }
+
+    .celebration-gif img {
+      width: min(240px, 55vw);
+      max-height: 180px;
+      object-fit: contain;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.14);
+    }
+
+    .groups-area {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      margin: 20px 0 28px;
+    }
+
+    .group-box {
+      background: linear-gradient(180deg, #f9fbff, #eef6ff);
+      border: 3px dashed #90caf9;
+      border-radius: 20px;
+      min-height: 120px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: center;
+      padding: 14px;
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: bold;
+      margin: 18px 0 12px;
+      color: #333;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(140px, 1fr));
+      gap: 14px;
+    }
+
+    .option-btn {
+      border: none;
+      border-radius: 18px;
+      padding: 16px;
+      font-size: 1.25rem;
+      font-weight: bold;
+      cursor: pointer;
+      background: #fff3cd;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    }
+
+    .option-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .option-btn.selected {
+      background: #cfe9ff;
+      outline: 3px solid #5aa9ff;
+    }
+
+    .option-btn.correct {
+      background: #c9f7d1;
+      outline: 3px solid #41b66e;
+    }
+
+    .option-btn.wrong {
+      background: #ffd3d3;
+      outline: 3px solid #ff6b6b;
+    }
+
+    .answer-area {
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .answer-area input {
+      flex: 1 1 180px;
+      min-width: 140px;
+      padding: 16px;
+      font-size: 1.2rem;
+      border-radius: 16px;
+      border: 3px solid #d8d8d8;
+    }
+
+    .check-btn, .next-btn, .restart-btn {
+      border: none;
+      border-radius: 16px;
+      padding: 16px 22px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .check-btn { background: #8ce99a; }
+    .next-btn { background: #74c0fc; }
+    .restart-btn { background: #ffd166; }
+
+    .message {
+      min-height: 34px;
+      margin-top: 16px;
+      font-size: 1.15rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .success { color: #1b8a4b; }
+    .error { color: #d9485f; }
+
+    .celebration {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.18);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 20px;
+    }
+
+    .celebration.show { display: flex; }
+
+    .celebration-card {
+      background: white;
+      border-radius: 30px;
+      padding: 34px 28px;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.2);
+      position: relative;
+      overflow: hidden;
+      animation: popIn 0.45s ease;
+    }
+
+    .celebration-card h2 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin: 0 0 12px;
+      color: #ff4d6d;
+    }
+
+    .celebration-card p {
+      font-size: 1.25rem;
+      margin: 0 0 20px;
+      color: #444;
+    }
+
+    .big-emoji {
+      font-size: 4rem;
+      margin-bottom: 10px;
+    }
+
+    .confetti-piece {
+      position: fixed;
+      top: -20px;
+      font-size: 1.6rem;
+      animation: fall linear forwards;
+      z-index: 60;
+      pointer-events: none;
+    }
+
+    .final-screen {
+      display: none;
+      text-align: center;
+      padding: 30px 10px 10px;
+    }
+
+    .final-screen.show { display: block; }
+    .game-screen.hide { display: none; }
+
+    .trophy {
+      font-size: 5rem;
+      margin-bottom: 10px;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0.95; }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.75); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 640px) {
+      .game { padding: 18px; }
+      .options { grid-template-columns: 1fr; }
+      .answer-area { flex-direction: column; align-items: stretch; }
+      .check-btn, .next-btn, .restart-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <h1>Multiplication Picture Game</h1>
+    <div class="subtitle">Look at the groups, choose the correct multiplication sentence, and type the answer.</div>
+
+    <div class="game-screen" id="gameScreen">
+      <div class="topbar">
+        <div class="pill" id="progress">Question 1 / 20</div>
+        <div class="pill" id="score">Score: 0</div>
+      </div>
+
+      <div class="card">
+        <div class="instruction" id="instruction">How many objects are there?</div>
+
+        <div class="groups-area" id="groupsArea"></div>
+
+        <div class="section-title">Choose the correct multiplication:</div>
+        <div class="options" id="options"></div>
+
+        <div class="section-title">Now write the answer:</div>
+        <div class="answer-area">
+          <input id="answerInput" type="number" min="0" placeholder="Type the answer" inputmode="numeric" />
+          <button class="check-btn" id="checkBtn">Check Answer</button>
+          <button class="next-btn" id="nextBtn" style="display:none;">Next Question</button>
+        </div>
+
+        <div class="message" id="message"></div>
+      </div>
+    </div>
+
+    <div class="final-screen" id="finalScreen">
+      <div class="trophy">🏆</div>
+      <h2>You are a multiplication master!</h2>
+      <p id="finalText">Amazing work! You solved all 20 multiplication problems.</p>
+      <button class="restart-btn" id="restartBtn">Play Again</button>
+    </div>
+  </div>
+
+  <div class="celebration" id="celebration">
+    <div class="celebration-card">
+      <div class="big-emoji">🎉🌟🎊</div>
+      <div class="celebration-gif" id="successGifWrap">
+        <img src="https://media.giphy.com/media/l3vRlT2k2L35Cnn5C/giphy.gif" alt="Funny dancing celebration gif" />
+      </div>
+      <h2 id="celebrationTitle">Amazing!</h2>
+      <p id="celebrationText">You got it right!</p>
+      <button class="next-btn" id="celebrationNextBtn">Continue</button>
+    </div>
+  </div>
+
+  <script>
+    const items = ['🍎', '⭐', '⚽', '🧸', '🍊', '🐟', '🌸', '🚗', '🍪', '🦋'];
+    const celebrationMessages = [
+      'Amazing!', 'Great job!', 'Fantastic!', 'Super smart!', 'You did it!', 'Brilliant!', 'Awesome!', 'Excellent!'
+    ];
+
+    let questions = [];
+    let currentIndex = 0;
+    let score = 0;
+    let selectedOption = null;
+    let solvedCurrent = false;
+
+    const groupsArea = document.getElementById('groupsArea');
+    const optionsEl = document.getElementById('options');
+    const progressEl = document.getElementById('progress');
+    const scoreEl = document.getElementById('score');
+    const answerInput = document.getElementById('answerInput');
+    const checkBtn = document.getElementById('checkBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const messageEl = document.getElementById('message');
+    const finalScreen = document.getElementById('finalScreen');
+    const gameScreen = document.getElementById('gameScreen');
+    const finalText = document.getElementById('finalText');
+    const restartBtn = document.getElementById('restartBtn');
+    const celebration = document.getElementById('celebration');
+    const celebrationTitle = document.getElementById('celebrationTitle');
+    const celebrationText = document.getElementById('celebrationText');
+    const celebrationNextBtn = document.getElementById('celebrationNextBtn');
+    const successGifWrap = document.getElementById('successGifWrap');
+    let gifTimeout = null;
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateUniqueQuestions() {
+      const set = new Set();
+      const generated = [];
+
+      while (generated.length < 20) {
+        const groups = randomInt(1, 10);
+        const each = randomInt(1, 10);
+        const key = `${groups}x${each}`;
+        if (set.has(key)) continue;
+        set.add(key);
+
+        const object = items[randomInt(0, items.length - 1)];
+        const correct = `${groups} × ${each}`;
+        const distractors = new Set();
+
+        while (distractors.size < 3) {
+          const type = randomInt(1, 4);
+          let a = groups;
+          let b = each;
+
+          if (type === 1) {
+            a = randomInt(1, 10);
+          } else if (type === 2) {
+            b = randomInt(1, 10);
+          } else if (type === 3) {
+            a = randomInt(1, 10);
+            b = randomInt(1, 10);
+          } else {
+            a = each;
+            b = groups;
+          }
+
+          const option = `${a} × ${b}`;
+          if (option !== correct) distractors.add(option);
+        }
+
+        const options = shuffle([correct, ...distractors]);
+        generated.push({
+          groups,
+          each,
+          object,
+          answer: groups * each,
+          correct,
+          options
+        });
+      }
+
+      return generated;
+    }
+
+    function renderQuestion() {
+      hideSuccessGif();
+      const q = questions[currentIndex];
+      selectedOption = null;
+      solvedCurrent = false;
+      answerInput.value = '';
+      answerInput.disabled = false;
+      checkBtn.style.display = 'inline-block';
+      nextBtn.style.display = 'none';
+      messageEl.textContent = '';
+      messageEl.className = 'message';
+
+      progressEl.textContent = `Question ${currentIndex + 1} / 20`;
+      scoreEl.textContent = `Score: ${score}`;
+
+      groupsArea.innerHTML = '';
+      for (let i = 0; i < q.groups; i++) {
+        const box = document.createElement('div');
+        box.className = 'group-box';
+        for (let j = 0; j < q.each; j++) {
+          const item = document.createElement('span');
+          item.textContent = q.object;
+          box.appendChild(item);
+        }
+        groupsArea.appendChild(box);
+      }
+
+      optionsEl.innerHTML = '';
+      q.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = option;
+        btn.addEventListener('click', () => {
+          if (solvedCurrent) return;
+          selectedOption = option;
+          document.querySelectorAll('.option-btn').forEach(b => {
+            b.classList.remove('selected', 'wrong', 'correct');
+          });
+          btn.classList.add('selected');
+        });
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function resetCurrentQuestionState() {
+      selectedOption = null;
+      answerInput.value = '';
+      document.querySelectorAll('.option-btn').forEach(btn => {
+        btn.classList.remove('selected', 'wrong', 'correct');
+      });
+    }
+
+    function hideSuccessGif() {
+      successGifWrap.classList.remove('show');
+      if (gifTimeout) {
+        clearTimeout(gifTimeout);
+        gifTimeout = null;
+      }
+    }
+
+    function showSuccessGif() {
+      hideSuccessGif();
+      successGifWrap.classList.add('show');
+      gifTimeout = setTimeout(() => {
+        successGifWrap.classList.remove('show');
+        gifTimeout = null;
+      }, 4000);
+    }
+
+    function launchConfetti() {
+      const symbols = ['🎉', '🎊', '✨', '🌟', '🥳'];
+      for (let i = 0; i < 40; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        piece.style.left = Math.random() * 100 + 'vw';
+        piece.style.animationDuration = (2 + Math.random() * 2.4) + 's';
+        piece.style.fontSize = (1 + Math.random() * 1.8) + 'rem';
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 4500);
+      }
+    }
+
+    function showCelebration(text) {
+      const randomMessage = celebrationMessages[Math.floor(Math.random() * celebrationMessages.length)];
+      celebrationTitle.textContent = randomMessage;
+      celebrationText.textContent = text;
+      celebration.classList.add('show');
+      launchConfetti();
+    }
+
+    function hideCelebration() {
+      celebration.classList.remove('show');
+    }
+
+    function checkAnswer() {
+      const q = questions[currentIndex];
+      const typedAnswer = Number(answerInput.value);
+
+      if (!selectedOption) {
+        messageEl.textContent = 'Choose one multiplication option first.';
+        messageEl.className = 'message error';
+        return;
+      }
+
+      if (answerInput.value === '') {
+        messageEl.textContent = 'Type your answer before checking.';
+        messageEl.className = 'message error';
+        return;
+      }
+
+      const optionButtons = document.querySelectorAll('.option-btn');
+      const expressionCorrect = selectedOption === q.correct;
+      const answerCorrect = typedAnswer === q.answer;
+
+      if (expressionCorrect && answerCorrect) {
+        solvedCurrent = true;
+        score++;
+        scoreEl.textContent = `Score: ${score}`;
+        messageEl.textContent = 'Correct!';
+        messageEl.className = 'message success';
+        answerInput.disabled = true;
+
+        optionButtons.forEach(btn => {
+          if (btn.textContent === q.correct) btn.classList.add('correct');
+          btn.disabled = true;
+        });
+
+        checkBtn.style.display = 'none';
+        nextBtn.style.display = currentIndex < questions.length - 1 ? 'inline-block' : 'none';
+        showSuccessGif();
+        showCelebration(`Yes! ${q.correct} = ${q.answer}`);
+      } else {
+        messageEl.textContent = 'Oops! Let’s restart this question and try again. 💪';
+        messageEl.className = 'message error';
+        optionButtons.forEach(btn => {
+          if (btn.textContent === selectedOption && !expressionCorrect) btn.classList.add('wrong');
+        });
+        setTimeout(() => {
+          resetCurrentQuestionState();
+        }, 700);
+      }
+    }
+
+    function goNext() {
+      hideCelebration();
+      if (currentIndex < questions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        finishGame();
+      }
+    }
+
+    function finishGame() {
+      hideCelebration();
+      gameScreen.classList.add('hide');
+      finalScreen.classList.add('show');
+      finalText.textContent = `Amazing work! You solved all 20 multiplication problems and scored ${score} out of 20.`;
+      launchConfetti();
+      launchConfetti();
+    }
+
+    function startGame() {
+      hideSuccessGif();
+      questions = generateUniqueQuestions();
+      currentIndex = 0;
+      score = 0;
+      finalScreen.classList.remove('show');
+      gameScreen.classList.remove('hide');
+      renderQuestion();
+    }
+
+    checkBtn.addEventListener('click', checkAnswer);
+    nextBtn.addEventListener('click', goNext);
+    celebrationNextBtn.addEventListener('click', goNext);
+    restartBtn.addEventListener('click', startGame);
+    answerInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') checkAnswer();
+    });
+
+    startGame();
+  </script>
+</body>
+</html>
