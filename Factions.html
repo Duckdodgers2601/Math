@@ -40,15 +40,15 @@
     }
 
     .slide-container {
-      width: 1280px;
-      height: 720px;
-      transform-origin: top left;
-      position: absolute;
-      left: 0;
-      top: 0;
-      overflow: hidden;
-      background-color: #4c1d95;
-    }
+  width: 1280px;
+  height: 720px;
+  transform-origin: top left;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: #4c1d95;
+  overflow: hidden;
+}
 
     .bg-shape-1 {
       position: absolute;
@@ -86,14 +86,15 @@
       z-index: 1;
     }
 
-    .content {
-      position: relative;
-      z-index: 5;
-      width: 100%;
-      height: 100%;
-      padding: 60px 80px 90px;
-      box-sizing: border-box;
-    }
+.content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 658px; /* 720 - 62 footer */
+  padding: 28px 40px 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
 
     .badge {
       display: inline-block;
@@ -108,7 +109,7 @@
     }
 
     .slide-title {
-      font-size: 46px;
+      font-size: 38px;
       font-weight: 800;
       line-height: 1.15;
       margin: 20px 0 10px;
@@ -117,17 +118,17 @@
     .slide-subtitle {
       font-size: 20px;
       color: #ddd6fe;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .panel {
-      background: rgba(255,255,255,0.10);
-      border: 1px solid rgba(255,255,255,0.15);
-      backdrop-filter: blur(6px);
-      border-radius: 24px;
-      padding: 22px 24px;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.22);
-    }
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 24px;
+  padding: 22px 24px;
+  box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+  color: white;
+}
 
     .panel-strong {
       background: rgba(0,0,0,0.18);
@@ -192,14 +193,14 @@
       border-left: 6px solid #34d399;
       border-radius: 16px;
       padding: 14px 16px;
-      margin-bottom: 14px;
-      font-size: 24px;
+      margin-bottom: 10px;
+      font-size: 20px;
       line-height: 1.45;
     }
 
     .bullet-list li {
-      margin-bottom: 10px;
-      font-size: 24px;
+      margin-bottom: 8px;
+      font-size: 20px;
       line-height: 1.5;
     }
 
@@ -271,7 +272,7 @@
     .two-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 22px;
+      gap: 16px;
     }
 
     .three-col {
@@ -316,6 +317,63 @@
         display: none;
       }
     }
+    
+    /* Fix long slide (Slide 11) */
+.slide:nth-child(5) .content {
+  transform: scale(0.9);
+  transform-origin: top center;
+}
+    
+ 
+    /* Long slide fix: Different Denominators */
+.slide:nth-child(11) .content,
+.slide:nth-child(12) .content {
+  padding: 20px 28px 12px;
+}
+
+.slide:nth-child(11) .slide-title,
+.slide:nth-child(12) .slide-title {
+  font-size: 28px;
+  margin: 10px 0 6px;
+}
+
+.slide:nth-child(11) .slide-subtitle,
+.slide:nth-child(12) .slide-subtitle {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.slide:nth-child(11) .two-col,
+.slide:nth-child(12) .two-col {
+  gap: 12px;
+}
+
+.slide:nth-child(11) .panel,
+.slide:nth-child(12) .panel {
+  padding: 12px 14px;
+  border-radius: 18px;
+}
+
+.slide:nth-child(11) .step,
+.slide:nth-child(12) .step {
+  font-size: 14px;
+  line-height: 1.22;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border-radius: 12px;
+}
+
+.slide:nth-child(11) .text-2xl,
+.slide:nth-child(12) .text-2xl {
+  font-size: 18px !important;
+}
+
+.slide:nth-child(11) .badge,
+.slide:nth-child(12) .badge {
+  font-size: 15px;
+  padding: 8px 16px;
+}
+    
   </style>
 </head>
 <body>
@@ -717,41 +775,68 @@
       </div>
     </section>
 
-<!-- Slide 11 -->
+       <!-- Slide 11 -->
+    
 <section class="slide">
   <div class="slide-container">
     <div class="bg-shape-1"></div>
     <div class="bg-shape-2"></div>
 
     <div class="content">
-      <div class="badge"><i class="fa-solid fa-equals mr-2"></i>Different Denominators</div>
+      <div class="badge"><i class="fa-solid fa-plus mr-2"></i>Different Denominators</div>
       <h2 class="slide-title">
-        Find a <span class="highlight-yellow">common denominator</span> before adding or subtracting.
+        Adding fractions with <span class="highlight-yellow">different denominators</span>
       </h2>
       <p class="slide-subtitle">
-        Fractions must have the same denominator because the pieces need to be the same size.
+        First find a common denominator, then add the numerators.
       </p>
 
-      <div class="two-col mt-8">
+      <div class="two-col mt-6">
         <div class="panel">
-          <div class="text-2xl font-bold mb-4 text-yellow-300">Adding fractions</div>
+          <div class="text-2xl font-bold mb-4 text-yellow-300">Step-by-step method</div>
 
           <div class="step">
-            <strong>Example 1:</strong>
+            <strong>Step 1:</strong> Look at the denominators.
+          </div>
+
+          <div class="step">
+            <strong>Step 2:</strong> Find a common denominator.
+          </div>
+
+          <div class="step">
+            <strong>Step 3:</strong> Convert both fractions so they have the same denominator.
+          </div>
+
+          <div class="step">
+            <strong>Step 4:</strong> Add the numerators.
+          </div>
+
+          <div class="step">
+            <strong>Step 5:</strong> Keep the denominator the same and simplify if needed.
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="text-2xl font-bold mb-4 text-yellow-300">Examples</div>
+
+          <div class="step">
+            <strong>Example 1:</strong><br>
             <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
             +
             <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
+
+            <br><br>
+
+            Common denominator = 4
+
             <br>
-            Step 1: Denominators are 2 and 4
-            <br>
-            Step 2: Common denominator = 4
-            <br>
-            Step 3:
+
             <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
             =
             <span class="fraction"><span class="numerator">2</span><span class="denominator">4</span></span>
+
             <br>
-            Step 4:
+
             <span class="fraction"><span class="numerator">2</span><span class="denominator">4</span></span>
             +
             <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
@@ -760,71 +845,99 @@
           </div>
 
           <div class="step">
-            <strong>Example 2:</strong>
+            <strong>Example 2:</strong><br>
             <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
             +
             <span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span>
+
+            <br><br>
+
+            Common denominator = 6
+
             <br>
-            Step 1: Denominators are 3 and 6
-            <br>
-            Step 2: Common denominator = 6
-            <br>
-            Step 3:
+
             <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
             =
             <span class="fraction"><span class="numerator">4</span><span class="denominator">6</span></span>
+
             <br>
-            Step 4:
+
             <span class="fraction"><span class="numerator">4</span><span class="denominator">6</span></span>
             +
             <span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span>
             =
             <strong><span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span></strong>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar"><div>Slide 11</div><div>Adding with Different Denominators</div></div>
+  </div>
+</section>
+    
+    <!-- Slide 11.2 -->
+
+    <section class="slide">
+  <div class="slide-container">
+    <div class="bg-shape-1"></div>
+    <div class="bg-shape-2"></div>
+
+    <div class="content">
+      <div class="badge"><i class="fa-solid fa-minus mr-2"></i>Different Denominators</div>
+      <h2 class="slide-title">
+        Subtracting fractions with <span class="highlight-pink">different denominators</span>
+      </h2>
+      <p class="slide-subtitle">
+        First find a common denominator, then subtract the numerators.
+      </p>
+
+      <div class="two-col mt-6">
+        <div class="panel">
+          <div class="text-2xl font-bold mb-4 text-yellow-300">Step-by-step method</div>
 
           <div class="step">
-            <strong>Example 3:</strong>
-            <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span>
-            +
-            <span class="fraction"><span class="numerator">1</span><span class="denominator">10</span></span>
-            <br>
-            Step 1: Denominators are 5 and 10
-            <br>
-            Step 2: Common denominator = 10
-            <br>
-            Step 3:
-            <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span>
-            =
-            <span class="fraction"><span class="numerator">6</span><span class="denominator">10</span></span>
-            <br>
-            Step 4:
-            <span class="fraction"><span class="numerator">6</span><span class="denominator">10</span></span>
-            +
-            <span class="fraction"><span class="numerator">1</span><span class="denominator">10</span></span>
-            =
-            <strong><span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span></strong>
+            <strong>Step 1:</strong> Look at the denominators.
+          </div>
+
+          <div class="step">
+            <strong>Step 2:</strong> Find a common denominator.
+          </div>
+
+          <div class="step">
+            <strong>Step 3:</strong> Convert both fractions so they have the same denominator.
+          </div>
+
+          <div class="step">
+            <strong>Step 4:</strong> Subtract the numerators.
+          </div>
+
+          <div class="step">
+            <strong>Step 5:</strong> Keep the denominator the same and simplify if needed.
           </div>
         </div>
 
         <div class="panel">
-          <div class="text-2xl font-bold mb-4 text-yellow-300">Subtracting fractions</div>
+          <div class="text-2xl font-bold mb-4 text-yellow-300">Examples</div>
 
           <div class="step">
-            <strong>Example 1:</strong>
+            <strong>Example 1:</strong><br>
             <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>
             −
             <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
+
+            <br><br>
+
+            Common denominator = 4
+
             <br>
-            Step 1: Denominators are 4 and 2
-            <br>
-            Step 2: Common denominator = 4
-            <br>
-            Step 3:
+
             <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
             =
             <span class="fraction"><span class="numerator">2</span><span class="denominator">4</span></span>
+
             <br>
-            Step 4:
+
             <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>
             −
             <span class="fraction"><span class="numerator">2</span><span class="denominator">4</span></span>
@@ -833,66 +946,39 @@
           </div>
 
           <div class="step">
-            <strong>Example 2:</strong>
+            <strong>Example 2:</strong><br>
             <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span>
             −
             <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span>
+
+            <br><br>
+
+            Common denominator = 6
+
             <br>
-            Step 1: Denominators are 6 and 3
-            <br>
-            Step 2: Common denominator = 6
-            <br>
-            Step 3:
+
             <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span>
             =
             <span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span>
+
             <br>
-            Step 4:
+
             <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span>
             −
             <span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span>
             =
-            <span class="fraction"><span class="numerator">3</span><span class="denominator">6</span></span>
+            <strong><span class="fraction"><span class="numerator">3</span><span class="denominator">6</span></span></strong>
             =
             <strong><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></strong>
           </div>
-
-          <div class="step">
-            <strong>Example 3:</strong>
-            <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span>
-            −
-            <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
-            <br>
-            Step 1: Denominators are 8 and 4
-            <br>
-            Step 2: Common denominator = 8
-            <br>
-            Step 3:
-            <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
-            =
-            <span class="fraction"><span class="numerator">2</span><span class="denominator">8</span></span>
-            <br>
-            Step 4:
-            <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span>
-            −
-            <span class="fraction"><span class="numerator">2</span><span class="denominator">8</span></span>
-            =
-            <strong><span class="fraction"><span class="numerator">5</span><span class="denominator">8</span></span></strong>
-          </div>
         </div>
-      </div>
-
-      <div class="panel mt-6">
-        <p class="text-2xl">
-          <strong>Easy rule:</strong> Make the bottoms the same first, then add or subtract the top numbers.
-        </p>
       </div>
     </div>
 
-    <div class="footer-bar"><div>Slide 11</div><div>Make Denominators Match</div></div>
+    <div class="footer-bar"><div>Slide 12</div><div>Subtracting with Different Denominators</div></div>
   </div>
 </section>
-
+    
     <!-- Slide 12 -->
 <section class="slide">
   <div class="slide-container">
@@ -901,15 +987,106 @@
 
     <div class="content">
       <div class="badge"><i class="fa-solid fa-magnifying-glass mr-2"></i>Finding Common Denominators</div>
+
       <h2 class="slide-title">
         What if the denominators are <span class="highlight-pink">NOT multiples</span>?
       </h2>
+
       <p class="slide-subtitle">
         We find the smallest number both denominators can turn into.
       </p>
 
-      <div class="two-col mt-8">
+      <div class="panel mt-8">
+        <div class="text-2xl font-bold mb-4 text-yellow-300">Step-by-step method</div>
 
+        <div class="step">
+          <strong>Step 1:</strong> List multiples.
+          <br>Example: 3 → 3, 6, 9, 12, 15
+          <br>5 → 5, 10, 15
+        </div>
+
+        <div class="step">
+          <strong>Step 2:</strong> Find the first number they share.
+          <br><strong>15</strong> is the common denominator.
+        </div>
+
+        <div class="step">
+          <strong>Step 3:</strong> Convert both fractions so they have the same denominator.
+        </div>
+
+        <div class="step">
+          <strong>Important:</strong> Whatever you multiply the denominator by,
+          you must multiply the numerator by the same number.
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar"><div>Slide 12</div><div>Finding Common Denominators</div></div>
+  </div>
+</section>
+ 
+    <!-- Slide 12.1-->
+    
+    <section class="slide">
+  <div class="slide-container">
+    <div class="bg-shape-1"></div>
+    <div class="bg-shape-2"></div>
+
+    <div class="content">
+      <div class="badge"><i class="fa-solid fa-calculator mr-2"></i>Worked Example</div>
+
+      <h2 class="slide-title">
+        Example 1: Find a common denominator
+      </h2>
+
+      <p class="slide-subtitle">
+        Add the fractions after changing them to the same denominator.
+      </p>
+
+      <div class="panel mt-8" style="max-width: 900px; margin: 0 auto;">
+        <div class="step">
+          <strong>Question:</strong>
+          <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
+          +
+          <span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span>
+        </div>
+
+        <div class="step">
+          <strong>Step 1:</strong> Multiples of 3 → 3, 6, 9, 12, 15
+          <br><strong>Step 2:</strong> Multiples of 5 → 5, 10, 15
+          <br><strong>Common denominator = 15</strong>
+        </div>
+
+        <div class="step">
+          <strong>Step 3:</strong>
+          <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
+          → multiply by 5 →
+          <span class="fraction"><span class="numerator">10</span><span class="denominator">15</span></span>
+        </div>
+
+        <div class="step">
+          <strong>Step 4:</strong>
+          <span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span>
+          → multiply by 3 →
+          <span class="fraction"><span class="numerator">3</span><span class="denominator">15</span></span>
+        </div>
+
+        <div class="step">
+          <strong>Step 5:</strong>
+          <span class="fraction"><span class="numerator">10</span><span class="denominator">15</span></span>
+          +
+          <span class="fraction"><span class="numerator">3</span><span class="denominator">15</span></span>
+          =
+          <strong><span class="fraction"><span class="numerator">13</span><span class="denominator">15</span></span></strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar"><div>Slide 13</div><div>Example 1</div></div>
+  </div>
+</section>
+    
+    
         <!-- LEFT: METHOD -->
         <div class="panel">
           <div class="text-2xl font-bold mb-4 text-yellow-300">Step-by-step method</div>
