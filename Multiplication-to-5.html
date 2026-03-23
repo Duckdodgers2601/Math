@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multiplication up to 5</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #fff7d6, #dff7ff, #ffe4f2);
+  text-align:center; padding:20px; margin:0;
+}
+.container {max-width:900px; margin:auto; background:white; padding:24px; border-radius:24px; box-shadow:0 12px 30px rgba(0,0,0,0.12);} 
+
+h1 {color:#ff6b6b; margin-bottom:10px;}
+#progress {font-weight:bold; margin-bottom:15px;}
+
+.groups {
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+  gap:15px;
+  margin:20px 0;
+}
+.group {
+  border:3px dashed #90caf9;
+  border-radius:18px;
+  padding:12px;
+  min-height:100px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+  font-size:26px;
+  background:#eef6ff;
+}
+
+.options {
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:12px;
+}
+.options button {
+  padding:14px;
+  font-size:18px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  background:#fff3cd;
+}
+.options button.selected {
+  background:#cfe9ff;
+  outline:3px solid #5aa9ff;
+}
+
+input {padding:12px; font-size:18px; border-radius:10px; margin-top:10px; width:200px;}
+
+.main-btn {
+  margin-top:10px;
+  padding:12px 20px;
+  font-size:18px;
+  border:none;
+  border-radius:12px;
+  background:#8ce99a;
+  cursor:pointer;
+}
+
+#msg {margin-top:10px; color:#d9485f; font-weight:bold;}
+
+#celebration {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,0.3);
+  justify-content:center; align-items:center;
+}
+.card {background:white; padding:30px; border-radius:20px; text-align:center;}
+.gif {display:none; width:200px; margin:10px auto;}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Multiply up to 5</h1>
+<p id="progress"></p>
+
+<div id="groups" class="groups"></div>
+
+<div class="options" id="options"></div>
+
+<input id="answer" placeholder="Type answer">
+<br>
+<button class="main-btn" onclick="checkAnswer()">Check Answer</button>
+<p id="msg"></p>
+</div>
+
+<div id="celebration">
+<div class="card">
+<h2>Great Job! 🎉</h2>
+<img id="gif" class="gif" src="https://media.giphy.com/media/l3vRlT2k2L35Cnn5C/giphy.gif">
+<br>
+<button onclick="nextQ()">Continue</button>
+</div>
+</div>
+
+<script>
+let q=0, score=0, data=[];
+let selected=null;
+
+const emojis=['🍎','⭐','🍪','⚽','🧸','🍊','🌸','🦋','🚗','🍇'];
+
+function rand(){return Math.floor(Math.random()*5)+1}
+
+function gen(){
+ data=[];
+ for(let i=0;i<15;i++){
+   let a=rand(), b=rand();
+   let emoji=emojis[Math.floor(Math.random()*emojis.length)];
+   data.push({a,b,ans:a*b,emoji});
+ }
+}
+
+function show(){
+ let d=data[q];
+ document.getElementById('progress').innerText=`Question ${q+1}/15`;
+
+ let g='';
+ for(let i=0;i<d.a;i++){
+   let items='';
+   for(let j=0;j<d.b;j++) items+=`<span>${d.emoji}</span>`;
+   g+=`<div class="group">${items}</div>`;
+ }
+ document.getElementById('groups').innerHTML=g;
+
+ let opts=[`${d.a}x${d.b}`,`${d.b}x${d.a}`,`${rand()}x${rand()}`,`${rand()}x${rand()}`];
+ opts=opts.sort(()=>Math.random()-0.5);
+
+ document.getElementById('options').innerHTML=
+ opts.map(o=>`<button onclick="selectOption('${o}', this)">${o}</button>`).join('');
+
+ document.getElementById('answer').value='';
+ document.getElementById('msg').innerText='';
+ selected=null;
+}
+
+function selectOption(o, el){
+ selected=o;
+ document.querySelectorAll('#options button').forEach(btn=>btn.classList.remove('selected'));
+ el.classList.add('selected');
+}
+
+function checkAnswer(){
+ let d=data[q];
+ let ans=parseInt(document.getElementById('answer').value);
+
+ if(selected===`${d.a}x${d.b}` && ans===d.ans){
+   score++;
+   document.getElementById('celebration').style.display='flex';
+   let gif=document.getElementById('gif');
+   gif.style.display='block';
+   setTimeout(()=>gif.style.display='none',4000);
+ }else{
+   document.getElementById('msg').innerText='Try again!';
+   document.getElementById('answer').value='';
+   selected=null;
+   document.querySelectorAll('#options button').forEach(btn=>btn.classList.remove('selected'));
+ }
+}
+
+function nextQ(){
+ document.getElementById('celebration').style.display='none';
+ q++;
+ if(q<15){show()} else {alert('Finished! Score: '+score+' / 15')}
+}
+
+gen(); show();
+</script>
+
+</body>
+</html>
