@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adding and Subtracting Mixed & Improper Fractions</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&family=Fredoka:wght@400;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet"/>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #1f1147;
+      overflow: hidden;
+    }
+
+    .presentation {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: #4c1d95;
+      color: white;
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: block;
+    }
+
+    .slide-container {
+      width: 1280px;
+      height: 720px;
+      transform-origin: top left;
+      position: absolute;
+      left: 0;
+      top: 0;
+      overflow: hidden;
+      background-color: #4c1d95;
+    }
+
+    .bg-shape-1 {
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background-color: #1e3a8a;
+      opacity: 0.55;
+      z-index: 1;
+    }
+
+    .bg-shape-2 {
+      position: absolute;
+      bottom: -150px;
+      left: -150px;
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      background-color: #7c3aed;
+      opacity: 0.38;
+      z-index: 1;
+    }
+
+    .bg-shape-3 {
+      position: absolute;
+      top: 260px;
+      left: 780px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background-color: #0ea5e9;
+      opacity: 0.16;
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      height: 100%;
+      padding: 60px 80px 90px;
+      box-sizing: border-box;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #fbbf24;
+      color: #3b0764;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-size: 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      transform: rotate(-2deg);
+    }
+
+    .slide-title {
+      font-size: 46px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin: 20px 0 10px;
+    }
+
+    .slide-subtitle {
+      font-size: 20px;
+      color: #ddd6fe;
+      margin-bottom: 20px;
+    }
+
+    .panel {
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      border-radius: 24px;
+      padding: 22px 24px;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.22);
+    }
+
+    .panel-strong {
+      background: rgba(0,0,0,0.18);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 24px;
+      padding: 18px 22px;
+    }
+
+    .fraction {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      margin: 0 4px;
+      font-family: 'Fredoka', sans-serif;
+      min-width: 26px;
+      line-height: 1;
+    }
+
+    .numerator {
+      border-bottom: 3px solid #fbbf24;
+      padding: 0 4px 2px;
+      display: block;
+      width: 100%;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .denominator {
+      padding: 2px 4px 0;
+      display: block;
+      width: 100%;
+      text-align: center;
+      line-height: 1;
+    }
+
+    .whole-number {
+      font-size: 1.15em;
+      margin-right: 4px;
+      font-weight: bold;
+      color: #fbbf24;
+      font-family: 'Fredoka', sans-serif;
+      vertical-align: middle;
+    }
+
+    .mixed-number {
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    .example {
+      font-size: 28px;
+      line-height: 1.6;
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    .step {
+      background: rgba(255,255,255,0.08);
+      border-left: 6px solid #34d399;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      font-size: 24px;
+      line-height: 1.45;
+    }
+
+    .bullet-list li {
+      margin-bottom: 10px;
+      font-size: 24px;
+      line-height: 1.5;
+    }
+
+    .big-number {
+      font-size: 82px;
+      font-weight: 800;
+      color: #fbbf24;
+      line-height: 1;
+      font-family: 'Fredoka', sans-serif;
+    }
+
+    .icon-float {
+      position: absolute;
+      color: rgba(255,255,255,0.10);
+      z-index: 2;
+    }
+
+    .footer-bar {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 62px;
+      background: rgba(0,0,0,0.28);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      box-sizing: border-box;
+      z-index: 6;
+      font-size: 16px;
+      color: #e9d5ff;
+    }
+
+    .nav-controls {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 9999;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .nav-btn {
+      background: rgba(255,255,255,0.16);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 14px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 700;
+      backdrop-filter: blur(6px);
+    }
+
+    .nav-btn:hover {
+      background: rgba(255,255,255,0.24);
+    }
+
+    .slide-counter {
+      background: rgba(0,0,0,0.28);
+      color: white;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-weight: 700;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .three-col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .center-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .highlight-blue { color: #60a5fa; }
+    .highlight-pink { color: #f472b6; }
+    .highlight-green { color: #34d399; }
+    .highlight-yellow { color: #fbbf24; }
+
+    .emoji {
+      font-size: 42px;
+      margin-right: 10px;
+    }
+
+    .small-note {
+      color: #ddd6fe;
+      font-size: 18px;
+      margin-top: 10px;
+    }
+
+    @media print {
+      body {
+        overflow: visible;
+      }
+      .slide {
+        display: block !important;
+        position: relative;
+        page-break-after: always;
+      }
+      .nav-controls {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="presentation" id="presentation">
+
+    <!-- Slide 1 -->
+    <section class="slide active">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div>
+        <div class="bg-shape-2"></div>
+        <div class="bg-shape-3"></div>
+
+        <div class="icon-float" style="top: 10%; left: 10%; font-size: 4rem;"><i class="fa-solid fa-plus"></i></div>
+        <div class="icon-float" style="top: 18%; right: 15%; font-size: 3rem;"><i class="fa-solid fa-minus"></i></div>
+        <div class="icon-float" style="bottom: 16%; left: 16%; font-size: 5rem;"><i class="fa-solid fa-equals"></i></div>
+        <div class="icon-float" style="bottom: 14%; right: 9%; font-size: 4rem;"><i class="fa-solid fa-divide"></i></div>
+
+        <div class="content flex flex-col justify-center items-center text-center">
+          <div class="badge"><i class="fa-solid fa-shapes mr-2"></i>Mathematics • Fractions</div>
+
+          <h1 class="slide-title text-center" style="font-size:64px;">
+            Adding &amp; Subtracting<br>
+            <span class="highlight-blue">Mixed</span> &amp;
+            <span class="highlight-pink">Improper</span> Fractions
+          </h1>
+
+          <div class="panel mt-8" style="max-width:900px;">
+            <div class="example flex items-center justify-center">
+              <span class="whole-number">2</span>
+              <span class="fraction text-3xl">
+                <span class="numerator">1</span>
+                <span class="denominator">2</span>
+              </span>
+              <span class="mx-4 highlight-green text-4xl">=</span>
+              <span class="fraction text-3xl">
+                <span class="numerator">5</span>
+                <span class="denominator">2</span>
+              </span>
+              <span class="mx-4 highlight-yellow text-4xl">+</span>
+              <span class="fraction text-3xl">
+                <span class="numerator">3</span>
+                <span class="denominator">2</span>
+              </span>
+            </div>
+            <p class="mt-4 text-xl text-purple-100">Learn how to convert, add, subtract, and simplify fractions step by step.</p>
+          </div>
+        </div>
+
+        <div class="footer-bar">
+          <div><i class="fa-solid fa-chalkboard-user mr-2 text-yellow-300"></i>Teacher: Your Name</div>
+          <div>Topic: Mixed &amp; Improper Fractions</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Slide 2 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-book-open mr-2"></i>What is a Mixed Fraction?</div>
+          <h2 class="slide-title">A mixed fraction has a <span class="highlight-yellow">whole number</span> and a <span class="highlight-green">fraction</span>.</h2>
+          <p class="slide-subtitle">It shows more than one whole, plus an extra part.</p>
+
+          <div class="two-col mt-6">
+            <div class="panel">
+              <div class="step"><span class="emoji">🍕</span>
+                <strong>Example 1:</strong>
+                <span class="mixed-number">
+                  <span class="whole-number">1</span>
+                  <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
+                </span>
+                = 1 whole and 1 half
+              </div>
+              <div class="step"><span class="emoji">🍰</span>
+                <strong>Example 2:</strong>
+                <span class="mixed-number">
+                  <span class="whole-number">2</span>
+                  <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>
+                </span>
+                = 2 wholes and 3 quarters
+              </div>
+              <div class="step"><span class="emoji">🍫</span>
+                <strong>Example 3:</strong>
+                <span class="mixed-number">
+                  <span class="whole-number">3</span>
+                  <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span>
+                </span>
+                = 3 wholes and 1 third
+              </div>
+            </div>
+
+            <div class="panel-strong">
+              <div class="text-3xl font-bold mb-5">More examples</div>
+              <ul class="bullet-list list-disc pl-8">
+                <li><span class="mixed-number"><span class="whole-number">4</span><span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span></span> = 4 wholes and 2 fifths</li>
+                <li><span class="mixed-number"><span class="whole-number">5</span><span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span></span> = 5 wholes and 3 eighths</li>
+                <li><span class="mixed-number"><span class="whole-number">6</span><span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span></span> = 6 wholes and 7 tenths</li>
+              </ul>
+              <p class="small-note">A mixed fraction is easy to read because it shows the whole number first.</p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 2</div><div>Definition: Mixed Fraction</div></div>
+      </div>
+    </section>
+
+    <!-- Slide 3 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-divide mr-2"></i>What is an Improper Fraction?</div>
+          <h2 class="slide-title">An improper fraction has a <span class="highlight-pink">numerator bigger than the denominator</span>.</h2>
+          <p class="slide-subtitle">It represents a value greater than 1 whole.</p>
+
+          <div class="three-col mt-8">
+            <div class="panel text-center">
+              <div class="big-number">
+                <span class="fraction" style="font-size:64px;">
+                  <span class="numerator">5</span>
+                  <span class="denominator">2</span>
+                </span>
+              </div>
+              <p class="text-2xl mt-4">5 is bigger than 2</p>
+            </div>
+            <div class="panel text-center">
+              <div class="big-number">
+                <span class="fraction" style="font-size:64px;">
+                  <span class="numerator">7</span>
+                  <span class="denominator">4</span>
+                </span>
+              </div>
+              <p class="text-2xl mt-4">7 is bigger than 4</p>
+            </div>
+            <div class="panel text-center">
+              <div class="big-number">
+                <span class="fraction" style="font-size:64px;">
+                  <span class="numerator">9</span>
+                  <span class="denominator">3</span>
+                </span>
+              </div>
+              <p class="text-2xl mt-4">9 is bigger than 3</p>
+            </div>
+          </div>
+
+          <div class="panel mt-8">
+            <div class="example">
+              More examples:
+              <span class="mx-4 fraction"><span class="numerator">11</span><span class="denominator">5</span></span>
+              <span class="mx-4 fraction"><span class="numerator">13</span><span class="denominator">6</span></span>
+              <span class="mx-4 fraction"><span class="numerator">17</span><span class="denominator">8</span></span>
+              <span class="mx-4 fraction"><span class="numerator">21</span><span class="denominator">10</span></span>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 3</div><div>Definition: Improper Fraction</div></div>
+      </div>
+    </section>
+
+    <!-- Slide 4 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-repeat mr-2"></i>Mixed and Improper Fractions</div>
+          <h2 class="slide-title">They can show the <span class="highlight-green">same value</span> in different forms.</h2>
+
+          <div class="two-col mt-8">
+            <div class="panel">
+              <div class="step">
+                <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span>
+                <span class="mx-3 highlight-green">=</span>
+                <span class="fraction"><span class="numerator">5</span><span class="denominator">2</span></span>
+              </div>
+              <div class="step">
+                <span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span>
+                <span class="mx-3 highlight-green">=</span>
+                <span class="fraction"><span class="numerator">13</span><span class="denominator">4</span></span>
+              </div>
+              <div class="step">
+                <span class="mixed-number"><span class="whole-number">4</span><span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span></span>
+                <span class="mx-3 highlight-green">=</span>
+                <span class="fraction"><span class="numerator">23</span><span class="denominator">5</span></span>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="step">
+                <span class="mixed-number"><span class="whole-number">1</span><span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span></span>
+                <span class="mx-3 highlight-green">=</span>
+                <span class="fraction"><span class="numerator">7</span><span class="denominator">4</span></span>
+              </div>
+              <div class="step">
+                <span class="mixed-number"><span class="whole-number">5</span><span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span></span>
+                <span class="mx-3 highlight-green">=</span>
+                <span class="fraction"><span class="numerator">17</span><span class="denominator">3</span></span>
+              </div>
+              <div class="step">
+                <span class="mixed-number"><span class="whole-number">6</span><span class="fraction"><span class="numerator">1</span><span class="denominator">8</span></span></span>
+                <span class="mx-3 highlight-green">=</span>
+                <span class="fraction"><span class="numerator">49</span><span class="denominator">8</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 4</div><div>Same Value, Different Form</div></div>
+      </div>
+    </section>
+
+    <!-- Slide 5 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-arrow-right-arrow-left mr-2"></i>Convert Mixed → Improper</div>
+          <h2 class="slide-title">Multiply the whole number by the denominator, then add the numerator.</h2>
+
+          <div class="panel mt-6">
+            <div class="text-3xl font-bold mb-4">Rule:</div>
+            <div class="example">
+              (<span class="highlight-yellow">whole</span> × <span class="highlight-blue">denominator</span>) + <span class="highlight-pink">numerator</span>
+              → put the answer over the same denominator
+            </div>
+          </div>
+
+          <div class="two-col mt-6">
+            <div class="panel">
+              <div class="step"><span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span> → (2 × 2) + 1 = 5 → <strong><span class="fraction"><span class="numerator">5</span><span class="denominator">2</span></span></strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span> → (3 × 4) + 1 = 13 → <strong><span class="fraction"><span class="numerator">13</span><span class="denominator">4</span></span></strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">4</span><span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span></span> → (4 × 3) + 2 = 14 → <strong><span class="fraction"><span class="numerator">14</span><span class="denominator">3</span></span></strong></div>
+            </div>
+            <div class="panel">
+              <div class="step"><span class="mixed-number"><span class="whole-number">5</span><span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span></span> → (5 × 4) + 3 = 23 → <strong><span class="fraction"><span class="numerator">23</span><span class="denominator">4</span></span></strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">6</span><span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span></span> → (6 × 5) + 1 = 31 → <strong><span class="fraction"><span class="numerator">31</span><span class="denominator">5</span></span></strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">1</span><span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span></span> → (1 × 8) + 7 = 15 → <strong><span class="fraction"><span class="numerator">15</span><span class="denominator">8</span></span></strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 5</div><div>Converting Mixed Fractions</div></div>
+      </div>
+    </section>
+
+    <!-- Slide 6 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-arrow-rotate-left mr-2"></i>Convert Improper → Mixed</div>
+          <h2 class="slide-title">Divide the numerator by the denominator.</h2>
+          <p class="slide-subtitle">The quotient is the whole number. The remainder becomes the numerator.</p>
+
+          <div class="two-col mt-8">
+            <div class="panel">
+              <div class="step"><span class="fraction"><span class="numerator">7</span><span class="denominator">2</span></span> → 7 ÷ 2 = 3 remainder 1 → <strong><span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">9</span><span class="denominator">4</span></span> → 9 ÷ 4 = 2 remainder 1 → <strong><span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">11</span><span class="denominator">3</span></span> → 11 ÷ 3 = 3 remainder 2 → <strong><span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span></span></strong></div>
+            </div>
+            <div class="panel">
+              <div class="step"><span class="fraction"><span class="numerator">13</span><span class="denominator">5</span></span> → 13 ÷ 5 = 2 remainder 3 → <strong><span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">17</span><span class="denominator">6</span></span> → 17 ÷ 6 = 2 remainder 5 → <strong><span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">22</span><span class="denominator">7</span></span> → 22 ÷ 7 = 3 remainder 1 → <strong><span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">1</span><span class="denominator">7</span></span></span></strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 6</div><div>Back to Mixed Form</div></div>
+      </div>
+    </section>
+
+    <!-- Slide 7 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-plus mr-2"></i>Adding Fractions: Same Denominator</div>
+          <h2 class="slide-title">When the denominator is the same, add the numerators only.</h2>
+
+          <div class="panel mt-8">
+            <div class="example">
+              <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span> +
+              <span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span> =
+              <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span>
+              &nbsp;&nbsp;•&nbsp;&nbsp;
+              <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> +
+              <span class="fraction"><span class="numerator">2</span><span class="denominator">4</span></span> =
+              <span class="fraction"><span class="numerator">5</span><span class="denominator">4</span></span>
+              &nbsp;&nbsp;•&nbsp;&nbsp;
+              <span class="fraction"><span class="numerator">5</span><span class="denominator">8</span></span> +
+              <span class="fraction"><span class="numerator">1</span><span class="denominator">8</span></span> =
+              <span class="fraction"><span class="numerator">6</span><span class="denominator">8</span></span>
+            </div>
+          </div>
+
+          <div class="two-col mt-6">
+            <div class="panel">
+              <div class="step"><span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span> + <span class="fraction"><span class="numerator">4</span><span class="denominator">6</span></span> = <strong><span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">3</span><span class="denominator">7</span></span> + <span class="fraction"><span class="numerator">2</span><span class="denominator">7</span></span> = <strong><span class="fraction"><span class="numerator">5</span><span class="denominator">7</span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">5</span><span class="denominator">9</span></span> + <span class="fraction"><span class="numerator">3</span><span class="denominator">9</span></span> = <strong><span class="fraction"><span class="numerator">8</span><span class="denominator">9</span></span></strong></div>
+            </div>
+            <div class="panel">
+              <div class="step"><span class="fraction"><span class="numerator">4</span><span class="denominator">10</span></span> + <span class="fraction"><span class="numerator">3</span><span class="denominator">10</span></span> = <strong><span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">7</span><span class="denominator">12</span></span> + <span class="fraction"><span class="numerator">2</span><span class="denominator">12</span></span> = <strong><span class="fraction"><span class="numerator">9</span><span class="denominator">12</span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">6</span><span class="denominator">11</span></span> + <span class="fraction"><span class="numerator">1</span><span class="denominator">11</span></span> = <strong><span class="fraction"><span class="numerator">7</span><span class="denominator">11</span></span></strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 7</div><div>Add Numerators Only</div></div>
+      </div>
+    </section>
+
+    <!-- Slide 8 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-square-plus mr-2"></i>Adding Mixed Fractions</div>
+          <h2 class="slide-title">First convert to improper fractions, then add.</h2>
+
+          <div class="two-col mt-8">
+            <div class="panel">
+              <div class="step"><span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span> + <span class="mixed-number"><span class="whole-number">1</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span> = <span class="fraction"><span class="numerator">5</span><span class="denominator">2</span></span> + <span class="fraction"><span class="numerator">3</span><span class="denominator">2</span></span> = <span class="fraction"><span class="numerator">8</span><span class="denominator">2</span></span> = <strong>4</strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span> + <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span> = <span class="fraction"><span class="numerator">13</span><span class="denominator">4</span></span> + <span class="fraction"><span class="numerator">9</span><span class="denominator">4</span></span> = <span class="fraction"><span class="numerator">22</span><span class="denominator">4</span></span> = <strong><span class="mixed-number"><span class="whole-number">5</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">1</span><span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span></span> + <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span></span> = <span class="fraction"><span class="numerator">7</span><span class="denominator">4</span></span> + <span class="fraction"><span class="numerator">11</span><span class="denominator">4</span></span> = <span class="fraction"><span class="numerator">18</span><span class="denominator">4</span></span> = <strong><span class="mixed-number"><span class="whole-number">4</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></strong></div>
+            </div>
+            <div class="panel">
+              <div class="step"><span class="mixed-number"><span class="whole-number">4</span><span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span></span> + <span class="mixed-number"><span class="whole-number">1</span><span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span></span> = <span class="fraction"><span class="numerator">13</span><span class="denominator">3</span></span> + <span class="fraction"><span class="numerator">4</span><span class="denominator">3</span></span> = <span class="fraction"><span class="numerator">17</span><span class="denominator">3</span></span> = <strong><span class="mixed-number"><span class="whole-number">5</span><span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span></span></strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span></span> + <span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span></span> = <span class="fraction"><span class="numerator">12</span><span class="denominator">5</span></span> + <span class="fraction"><span class="numerator">16</span><span class="denominator">5</span></span> = <span class="fraction"><span class="numerator">28</span><span class="denominator">5</span></span> = <strong><span class="mixed-number"><span class="whole-number">5</span><span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span></span></strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">5</span><span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span></span> + <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span></span> = <span class="fraction"><span class="numerator">31</span><span class="denominator">6</span></span> + <span class="fraction"><span class="numerator">14</span><span class="denominator">6</span></span> = <span class="fraction"><span class="numerator">45</span><span class="denominator">6</span></span> = <strong><span class="mixed-number"><span class="whole-number">7</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 8</div><div>Add Mixed Numbers</div></div>
+      </div>
+    </section>
+
+    <!-- Slide 9 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-minus mr-2"></i>Subtracting Fractions: Same Denominator</div>
+          <h2 class="slide-title">When the denominator is the same, subtract the numerators only.</h2>
+
+          <div class="panel mt-8">
+            <div class="example">
+              <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> −
+              <span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span> =
+              <span class="fraction"><span class="numerator">3</span><span class="denominator">6</span></span>
+              &nbsp;&nbsp;•&nbsp;&nbsp;
+              <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span> −
+              <span class="fraction"><span class="numerator">3</span><span class="denominator">8</span></span> =
+              <span class="fraction"><span class="numerator">4</span><span class="denominator">8</span></span>
+              &nbsp;&nbsp;•&nbsp;&nbsp;
+              <span class="fraction"><span class="numerator">9</span><span class="denominator">10</span></span> −
+              <span class="fraction"><span class="numerator">4</span><span class="denominator">10</span></span> =
+              <span class="fraction"><span class="numerator">5</span><span class="denominator">10</span></span>
+            </div>
+          </div>
+
+          <div class="two-col mt-6">
+            <div class="panel">
+              <div class="step"><span class="fraction"><span class="numerator">8</span><span class="denominator">9</span></span> − <span class="fraction"><span class="numerator">2</span><span class="denominator">9</span></span> = <strong><span class="fraction"><span class="numerator">6</span><span class="denominator">9</span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">6</span><span class="denominator">7</span></span> − <span class="fraction"><span class="numerator">1</span><span class="denominator">7</span></span> = <strong><span class="fraction"><span class="numerator">5</span><span class="denominator">7</span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">11</span><span class="denominator">12</span></span> − <span class="fraction"><span class="numerator">3</span><span class="denominator">12</span></span> = <strong><span class="fraction"><span class="numerator">8</span><span class="denominator">12</span></span></strong></div>
+            </div>
+            <div class="panel">
+              <div class="step"><span class="fraction"><span class="numerator">10</span><span class="denominator">11</span></span> − <span class="fraction"><span class="numerator">4</span><span class="denominator">11</span></span> = <strong><span class="fraction"><span class="numerator">6</span><span class="denominator">11</span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">7</span><span class="denominator">15</span></span> − <span class="fraction"><span class="numerator">2</span><span class="denominator">15</span></span> = <strong><span class="fraction"><span class="numerator">5</span><span class="denominator">15</span></span></strong></div>
+              <div class="step"><span class="fraction"><span class="numerator">13</span><span class="denominator">20</span></span> − <span class="fraction"><span class="numerator">5</span><span class="denominator">20</span></span> = <strong><span class="fraction"><span class="numerator">8</span><span class="denominator">20</span></span></strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 9</div><div>Subtract Numerators Only</div></div>
+      </div>
+    </section>
+
+    <!-- Slide 10 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-square-minus mr-2"></i>Subtracting Mixed Fractions</div>
+          <h2 class="slide-title">Convert first, then subtract, then simplify.</h2>
+
+          <div class="two-col mt-8">
+            <div class="panel">
+              <div class="step"><span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span> − <span class="mixed-number"><span class="whole-number">1</span><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span> = <span class="fraction"><span class="numerator">13</span><span class="denominator">4</span></span> − <span class="fraction"><span class="numerator">5</span><span class="denominator">4</span></span> = <span class="fraction"><span class="numerator">8</span><span class="denominator">4</span></span> = <strong>2</strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">5</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span> − <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span> = <span class="fraction"><span class="numerator">11</span><span class="denominator">2</span></span> − <span class="fraction"><span class="numerator">5</span><span class="denominator">2</span></span> = <span class="fraction"><span class="numerator">6</span><span class="denominator">2</span></span> = <strong>3</strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">4</span><span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span></span> − <span class="mixed-number"><span class="whole-number">1</span><span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span></span> = <span class="fraction"><span class="numerator">19</span><span class="denominator">4</span></span> − <span class="fraction"><span class="numerator">7</span><span class="denominator">4</span></span> = <span class="fraction"><span class="numerator">12</span><span class="denominator">4</span></span> = <strong>3</strong></div>
+            </div>
+            <div class="panel">
+              <div class="step"><span class="mixed-number"><span class="whole-number">6</span><span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span></span> − <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span></span> = <span class="fraction"><span class="numerator">19</span><span class="denominator">3</span></span> − <span class="fraction"><span class="numerator">7</span><span class="denominator">3</span></span> = <span class="fraction"><span class="numerator">12</span><span class="denominator">3</span></span> = <strong>4</strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">7</span><span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span></span> − <span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span></span> = <span class="fraction"><span class="numerator">37</span><span class="denominator">5</span></span> − <span class="fraction"><span class="numerator">16</span><span class="denominator">5</span></span> = <span class="fraction"><span class="numerator">21</span><span class="denominator">5</span></span> = <strong><span class="mixed-number"><span class="whole-number">4</span><span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span></span></strong></div>
+              <div class="step"><span class="mixed-number"><span class="whole-number">8</span><span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span></span> − <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span></span> = <span class="fraction"><span class="numerator">53</span><span class="denominator">6</span></span> − <span class="fraction"><span class="numerator">14</span><span class="denominator">6</span></span> = <span class="fraction"><span class="numerator">39</span><span class="denominator">6</span></span> = <strong><span class="mixed-number"><span class="whole-number">6</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span></strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 10</div><div>Subtract Mixed Numbers</div></div>
+      </div>
+    </section>
+
+<!-- Slide 11 -->
+<section class="slide">
+  <div class="slide-container">
+    <div class="bg-shape-1"></div>
+    <div class="bg-shape-2"></div>
+
+    <div class="content">
+      <div class="badge"><i class="fa-solid fa-equals mr-2"></i>Different Denominators</div>
+      <h2 class="slide-title">
+        Find a <span class="highlight-yellow">common denominator</span> before adding or subtracting.
+      </h2>
+      <p class="slide-subtitle">
+        Fractions must have the same denominator because the pieces need to be the same size.
+      </p>
+
+      <div class="two-col mt-8">
+        <div class="panel">
+          <div class="text-2xl font-bold mb-4 text-yellow-300">Adding fractions</div>
+
+          <div class="step">
+            <strong>Example 1:</strong>
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
+            +
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
+            <br>
+            Step 1: Denominators are 2 and 4
+            <br>
+            Step 2: Common denominator = 4
+            <br>
+            Step 3:
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
+            =
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">4</span></span>
+            <br>
+            Step 4:
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">4</span></span>
+            +
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
+            =
+            <strong><span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span></strong>
+          </div>
+
+          <div class="step">
+            <strong>Example 2:</strong>
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
+            +
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span>
+            <br>
+            Step 1: Denominators are 3 and 6
+            <br>
+            Step 2: Common denominator = 6
+            <br>
+            Step 3:
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
+            =
+            <span class="fraction"><span class="numerator">4</span><span class="denominator">6</span></span>
+            <br>
+            Step 4:
+            <span class="fraction"><span class="numerator">4</span><span class="denominator">6</span></span>
+            +
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">6</span></span>
+            =
+            <strong><span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span></strong>
+          </div>
+
+          <div class="step">
+            <strong>Example 3:</strong>
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span>
+            +
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">10</span></span>
+            <br>
+            Step 1: Denominators are 5 and 10
+            <br>
+            Step 2: Common denominator = 10
+            <br>
+            Step 3:
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span>
+            =
+            <span class="fraction"><span class="numerator">6</span><span class="denominator">10</span></span>
+            <br>
+            Step 4:
+            <span class="fraction"><span class="numerator">6</span><span class="denominator">10</span></span>
+            +
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">10</span></span>
+            =
+            <strong><span class="fraction"><span class="numerator">7</span><span class="denominator">10</span></span></strong>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="text-2xl font-bold mb-4 text-yellow-300">Subtracting fractions</div>
+
+          <div class="step">
+            <strong>Example 1:</strong>
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>
+            −
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
+            <br>
+            Step 1: Denominators are 4 and 2
+            <br>
+            Step 2: Common denominator = 4
+            <br>
+            Step 3:
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span>
+            =
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">4</span></span>
+            <br>
+            Step 4:
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>
+            −
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">4</span></span>
+            =
+            <strong><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></strong>
+          </div>
+
+          <div class="step">
+            <strong>Example 2:</strong>
+            <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span>
+            −
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span>
+            <br>
+            Step 1: Denominators are 6 and 3
+            <br>
+            Step 2: Common denominator = 6
+            <br>
+            Step 3:
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span>
+            =
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span>
+            <br>
+            Step 4:
+            <span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span>
+            −
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">6</span></span>
+            =
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">6</span></span>
+            =
+            <strong><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></strong>
+          </div>
+
+          <div class="step">
+            <strong>Example 3:</strong>
+            <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span>
+            −
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
+            <br>
+            Step 1: Denominators are 8 and 4
+            <br>
+            Step 2: Common denominator = 8
+            <br>
+            Step 3:
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span>
+            =
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">8</span></span>
+            <br>
+            Step 4:
+            <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span>
+            −
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">8</span></span>
+            =
+            <strong><span class="fraction"><span class="numerator">5</span><span class="denominator">8</span></span></strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel mt-6">
+        <p class="text-2xl">
+          <strong>Easy rule:</strong> Make the bottoms the same first, then add or subtract the top numbers.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer-bar"><div>Slide 11</div><div>Make Denominators Match</div></div>
+  </div>
+</section>
+
+    <!-- Slide 12 -->
+<section class="slide">
+  <div class="slide-container">
+    <div class="bg-shape-1"></div>
+    <div class="bg-shape-2"></div>
+
+    <div class="content">
+      <div class="badge"><i class="fa-solid fa-magnifying-glass mr-2"></i>Finding Common Denominators</div>
+      <h2 class="slide-title">
+        What if the denominators are <span class="highlight-pink">NOT multiples</span>?
+      </h2>
+      <p class="slide-subtitle">
+        We find the smallest number both denominators can turn into.
+      </p>
+
+      <div class="two-col mt-8">
+
+        <!-- LEFT: METHOD -->
+        <div class="panel">
+          <div class="text-2xl font-bold mb-4 text-yellow-300">Step-by-step method</div>
+
+          <div class="step">
+            <strong>Step 1:</strong> List multiples  
+            Example: 3 and 5  
+            <br>3 → 3, 6, 9, 12, 15  
+            <br>5 → 5, 10, 15  
+          </div>
+
+          <div class="step">
+            <strong>Step 2:</strong> Find the first number they share  
+            👉 <strong>15</strong> is the common denominator
+          </div>
+
+          <div class="step">
+            <strong>Step 3:</strong> Convert both fractions  
+            Make BOTH fractions have denominator 15
+          </div>
+
+          <div class="step">
+            <strong>Important:</strong>  
+            Whatever you multiply the denominator by,  
+            you MUST multiply the numerator by the same number.
+          </div>
+        </div>
+
+        <!-- RIGHT: EXAMPLES -->
+        <div class="panel">
+          <div class="text-2xl font-bold mb-4 text-yellow-300">Example</div>
+
+          <div class="step">
+            <strong>Example 1:</strong><br>
+
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
+            +
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span>
+
+            <br><br>
+
+            Step 1: Common denominator = 15  
+
+            <br>
+
+            Step 2: Convert  
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">3</span></span>
+            → multiply by 5 →
+            <span class="fraction"><span class="numerator">10</span><span class="denominator">15</span></span>
+
+            <br>
+
+            <span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span>
+            → multiply by 3 →
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">15</span></span>
+
+            <br><br>
+
+            Step 3: Add  
+            <span class="fraction"><span class="numerator">10</span><span class="denominator">15</span></span>
+            +
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">15</span></span>
+            =
+            <strong><span class="fraction"><span class="numerator">13</span><span class="denominator">15</span></span></strong>
+          </div>
+
+          <div class="step">
+            <strong>Example 2:</strong><br>
+
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>
+            +
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span>
+
+            <br><br>
+
+            Common denominator = 20  
+
+            <br>
+
+            <span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span>
+            → ×5 →
+            <span class="fraction"><span class="numerator">15</span><span class="denominator">20</span></span>
+
+            <br>
+
+            <span class="fraction"><span class="numerator">2</span><span class="denominator">5</span></span>
+            → ×4 →
+            <span class="fraction"><span class="numerator">8</span><span class="denominator">20</span></span>
+
+            <br><br>
+
+            Answer:
+            <strong><span class="fraction"><span class="numerator">23</span><span class="denominator">20</span></span></strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- KEY IDEA -->
+      <div class="panel mt-6">
+        <p class="text-2xl">
+          <strong>Key idea:</strong>  
+          When the denominator changes, the numerator must change too —  
+          so the value of the fraction stays the same.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="footer-bar">
+      <div>Slide 12</div>
+      <div>Non-Multiple Denominators</div>
+    </div>
+  </div>
+</section>
+    
+    <!-- Slide 12 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content">
+          <div class="badge"><i class="fa-solid fa-list-check mr-2"></i>Key Steps</div>
+          <h2 class="slide-title">Always follow these steps.</h2>
+
+          <div class="panel mt-10" style="max-width:960px; margin:auto;">
+            <div class="step"><strong>1.</strong> Convert mixed fractions to improper fractions if needed.</div>
+            <div class="step"><strong>2.</strong> Make sure the denominators are the same.</div>
+            <div class="step"><strong>3.</strong> Add or subtract the numerators.</div>
+            <div class="step"><strong>4.</strong> Keep the denominator the same.</div>
+            <div class="step"><strong>5.</strong> Simplify the answer.</div>
+            <div class="step"><strong>6.</strong> Change back to a mixed number if needed.</div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 12</div><div>Method Summary</div></div>
+      </div>
+    </section>
+
+    <!-- Slide 13 -->
+    <section class="slide">
+      <div class="slide-container">
+        <div class="bg-shape-1"></div><div class="bg-shape-2"></div>
+        <div class="content center-box">
+          <div class="w-full">
+            <div class="badge"><i class="fa-solid fa-pencil mr-2"></i>Practice Time</div>
+            <h2 class="slide-title text-center">Try these questions</h2>
+
+            <div class="two-col mt-8">
+              <div class="panel">
+                <ul class="bullet-list list-disc pl-8">
+                  <li><span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span></span> + <span class="mixed-number"><span class="whole-number">1</span><span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span></span> = ?</li>
+                  <li><span class="mixed-number"><span class="whole-number">4</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span> − <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span></span> = ?</li>
+                  <li><span class="fraction"><span class="numerator">3</span><span class="denominator">4</span></span> + <span class="fraction"><span class="numerator">1</span><span class="denominator">2</span></span> = ?</li>
+                </ul>
+              </div>
+              <div class="panel">
+                <ul class="bullet-list list-disc pl-8">
+                  <li><span class="fraction"><span class="numerator">5</span><span class="denominator">6</span></span> − <span class="fraction"><span class="numerator">1</span><span class="denominator">3</span></span> = ?</li>
+                  <li><span class="mixed-number"><span class="whole-number">3</span><span class="fraction"><span class="numerator">3</span><span class="denominator">5</span></span></span> + <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">5</span></span></span> = ?</li>
+                  <li><span class="mixed-number"><span class="whole-number">6</span><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span> − <span class="mixed-number"><span class="whole-number">2</span><span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span></span> = ?</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="panel mt-8 text-center">
+              <p class="text-3xl font-bold">Can you solve them step by step?</p>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bar"><div>Slide 13</div><div>Independent Practice</div></div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="nav-controls">
+    <button class="nav-btn" onclick="prevSlide()">⟵ Prev</button>
+    <div class="slide-counter" id="counter">1 / 13</div>
+    <button class="nav-btn" onclick="nextSlide()">Next ⟶</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const counter = document.getElementById('counter');
+    const baseWidth = 1280;
+    const baseHeight = 720;
+    let currentSlide = 0;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+      counter.textContent = `${index + 1} / ${slides.length}`;
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+      showSlide(currentSlide);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    function scaleSlides() {
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const scale = Math.min(vw / baseWidth, vh / baseHeight);
+
+      document.querySelectorAll('.slide-container').forEach(container => {
+        container.style.transform = `scale(${scale})`;
+        container.style.left = `${(vw - baseWidth * scale) / 2}px`;
+        container.style.top = `${(vh - baseHeight * scale) / 2}px`;
+      });
+    }
+
+    window.addEventListener('resize', scaleSlides);
+    scaleSlides();
+    showSlide(currentSlide);
+  </script>
+</body>
+</html>
