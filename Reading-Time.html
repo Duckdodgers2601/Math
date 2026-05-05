@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clock Time Adventure</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Comic Sans MS", "Trebuchet MS", Arial, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffefd5, #b8f7ff, #d7c9ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      color: #233047;
+    }
+
+    .game {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 30px;
+      padding: 24px;
+      box-shadow: 0 20px 45px rgba(49, 68, 110, 0.22);
+      border: 6px solid rgba(255, 255, 255, 0.65);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(255, 213, 79, 0.7) 0 8px, transparent 9px),
+        radial-gradient(circle at 85% 15%, rgba(255, 128, 171, 0.55) 0 7px, transparent 8px),
+        radial-gradient(circle at 90% 85%, rgba(129, 212, 250, 0.65) 0 9px, transparent 10px),
+        radial-gradient(circle at 12% 82%, rgba(174, 213, 129, 0.65) 0 8px, transparent 9px);
+      opacity: 0.7;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      margin-bottom: 8px;
+      color: #5b4bdb;
+      text-shadow: 2px 2px 0 #fff;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      margin-bottom: 18px;
+    }
+
+    .top-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 18px 0;
+    }
+
+    .badge {
+      background: #fff8c7;
+      border: 3px solid #ffd54f;
+      border-radius: 18px;
+      padding: 10px;
+      font-weight: bold;
+      box-shadow: 0 5px 0 #f2b705;
+    }
+
+    .main-area {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .clock-wrap {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 360px;
+    }
+
+    .clock {
+      width: min(330px, 80vw);
+      height: min(330px, 80vw);
+      border-radius: 50%;
+      background: radial-gradient(circle, #ffffff 0 62%, #e8f7ff 63% 100%);
+      border: 12px solid #5b4bdb;
+      position: relative;
+      box-shadow: inset 0 0 0 8px #fff, 0 14px 25px rgba(91, 75, 219, 0.25);
+    }
+
+    .number {
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      line-height: 34px;
+      text-align: center;
+      font-weight: 900;
+      font-size: 1.25rem;
+      color: #233047;
+      transform: translate(-50%, -50%);
+    }
+
+    .tick {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 4px;
+      height: 14px;
+      background: #93a2c7;
+      transform-origin: center -126px;
+      border-radius: 4px;
+    }
+
+    .hand {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform-origin: bottom center;
+      border-radius: 999px;
+    }
+
+    .hour-hand {
+      width: 12px;
+      height: 84px;
+      background: #ff7a59;
+      margin-left: -6px;
+      margin-top: -84px;
+      box-shadow: 0 0 0 2px rgba(255, 122, 89, 0.25);
+    }
+
+    .minute-hand {
+      width: 8px;
+      height: 120px;
+      background: #22a6b3;
+      margin-left: -4px;
+      margin-top: -120px;
+      box-shadow: 0 0 0 2px rgba(34, 166, 179, 0.2);
+    }
+
+    .center-dot {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      background: #5b4bdb;
+      border: 5px solid #fff;
+      border-radius: 50%;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+    }
+
+    .question-card {
+      background: #f8fbff;
+      border-radius: 28px;
+      padding: 22px;
+      border: 4px dashed #9bdcff;
+    }
+
+    .mascot {
+      font-size: 3rem;
+      margin-bottom: 8px;
+      animation: bounce 1.3s infinite ease-in-out;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .question {
+      font-size: 1.4rem;
+      font-weight: 900;
+      margin-bottom: 16px;
+      color: #38415e;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      font-weight: 900;
+      transition: transform 0.12s, box-shadow 0.12s, opacity 0.12s;
+    }
+
+    .option {
+      padding: 14px 16px;
+      border-radius: 18px;
+      font-size: 1.15rem;
+      background: #fff;
+      color: #233047;
+      border: 3px solid #d9e2ff;
+      box-shadow: 0 6px 0 #c8d4ff;
+    }
+
+    .option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #c8d4ff;
+    }
+
+    .option.correct {
+      background: #d8ffd8;
+      border-color: #36c46d;
+      box-shadow: 0 6px 0 #27a758;
+    }
+
+    .option.wrong {
+      background: #ffe1e1;
+      border-color: #ff6f6f;
+      box-shadow: 0 6px 0 #e34c4c;
+      animation: shake 0.25s;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+
+    .message {
+      min-height: 32px;
+      margin: 15px 0 5px;
+      font-size: 1.15rem;
+      font-weight: bold;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .control-btn {
+      padding: 13px 20px;
+      border-radius: 18px;
+      font-size: 1rem;
+      color: #fff;
+      background: #5b4bdb;
+      box-shadow: 0 6px 0 #3d31a8;
+    }
+
+    .control-btn.secondary {
+      background: #ff8a3d;
+      box-shadow: 0 6px 0 #c95f18;
+    }
+
+    .control-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 0 4px 0 #999;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 22px;
+      background: #e8ecff;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 3px solid #c9d2ff;
+      margin-top: 18px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #53dd8a, #ffd54f, #ff8a3d);
+      border-radius: 999px;
+      transition: width 0.3s ease;
+    }
+
+    .finish-screen {
+      display: none;
+      padding: 28px;
+      background: #fff5c4;
+      border: 5px solid #ffd54f;
+      border-radius: 28px;
+      margin-top: 20px;
+    }
+
+    .finish-screen h2 {
+      color: #5b4bdb;
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    .confetti {
+      font-size: 2.6rem;
+      animation: party 0.7s infinite alternate ease-in-out;
+    }
+
+    @keyframes party {
+      from { transform: rotate(-5deg) scale(1); }
+      to { transform: rotate(5deg) scale(1.08); }
+    }
+
+    @media (max-width: 760px) {
+      .main-area {
+        grid-template-columns: 1fr;
+      }
+
+      .top-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .clock-wrap {
+        min-height: 310px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <div class="stars"></div>
+    <div class="content">
+      <h1>⏰ Clock Time Adventure</h1>
+      <p class="subtitle">Look at the clock, choose the correct time, and help Timmy Turtle collect stars!</p>
+
+      <div class="top-bar">
+        <div class="badge">Question: <span id="questionCount">1</span> / <span id="totalQuestions">15</span></div>
+        <div class="badge">Stars: ⭐ <span id="score">0</span></div>
+        <div class="badge">Round: <span id="roundName">Read the Clock</span></div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div id="playArea" class="main-area">
+        <div class="clock-wrap">
+          <div class="clock" id="clock">
+            <div class="center-dot"></div>
+          </div>
+        </div>
+
+        <div class="question-card">
+          <div class="mascot" id="mascot">🐢</div>
+          <div class="question" id="questionText">What time is it?</div>
+          <div class="options" id="options"></div>
+          <div class="message" id="message"></div>
+          <div class="controls">
+            <button class="control-btn" id="nextBtn" disabled>Next ➜</button>
+            <button class="control-btn secondary" id="restartBtn">New Game 🔄</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="finish-screen" id="finishScreen">
+        <div class="confetti">🎉 ⭐ 🎈 ⭐ 🎉</div>
+        <h2>Amazing job!</h2>
+        <p>You finished 10 clock-reading questions and 5 challenge questions.</p>
+        <p>You earned <strong id="finalScore">0</strong> stars!</p>
+        <div class="controls">
+          <button class="control-btn secondary" onclick="startGame()">Play Again 🔄</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const clock = document.getElementById("clock");
+    const optionsEl = document.getElementById("options");
+    const messageEl = document.getElementById("message");
+    const nextBtn = document.getElementById("nextBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const questionCountEl = document.getElementById("questionCount");
+    const scoreEl = document.getElementById("score");
+    const roundNameEl = document.getElementById("roundName");
+    const progressFill = document.getElementById("progressFill");
+    const playArea = document.getElementById("playArea");
+    const finishScreen = document.getElementById("finishScreen");
+    const finalScore = document.getElementById("finalScore");
+    const mascot = document.getElementById("mascot");
+
+    let exercises = [];
+    let currentIndex = 0;
+    let score = 0;
+    let answeredCorrectly = false;
+
+    const mascots = ["🐢", "🦊", "🐼", "🐵", "🦁", "🐸", "🐰", "🐨"];
+    const praise = [
+      "Great job! ⭐",
+      "Fantastic! 🎉",
+      "You got it! 🚀",
+      "Clock master! ⏰",
+      "Amazing work! 🌟"
+    ];
+
+    function buildClockFace() {
+      for (let i = 1; i <= 12; i++) {
+        const number = document.createElement("div");
+        number.className = "number";
+        number.textContent = i;
+        const angle = (i * 30 - 90) * Math.PI / 180;
+        const radius = 123;
+        number.style.left = `calc(50% + ${Math.cos(angle) * radius}px)`;
+        number.style.top = `calc(50% + ${Math.sin(angle) * radius}px)`;
+        clock.appendChild(number);
+      }
+
+      for (let i = 0; i < 12; i++) {
+        const tick = document.createElement("div");
+        tick.className = "tick";
+        tick.style.transform = `rotate(${i * 30}deg) translateY(126px)`;
+        clock.appendChild(tick);
+      }
+
+      const hourHand = document.createElement("div");
+      hourHand.className = "hand hour-hand";
+      hourHand.id = "hourHand";
+      clock.appendChild(hourHand);
+
+      const minuteHand = document.createElement("div");
+      minuteHand.className = "hand minute-hand";
+      minuteHand.id = "minuteHand";
+      clock.appendChild(minuteHand);
+    }
+
+    function timeToText(hour, minute) {
+      const displayHour = hour === 0 ? 12 : hour;
+      if (minute === 0) return `${displayHour} o'clock`;
+      if (minute === 15) return `quarter past ${displayHour}`;
+      if (minute === 30) return `half past ${displayHour}`;
+      if (minute === 45) {
+        const nextHour = displayHour === 12 ? 1 : displayHour + 1;
+        return `quarter to ${nextHour}`;
+      }
+      return `${displayHour}:${String(minute).padStart(2, "0")}`;
+    }
+
+    function createExercise(hour, minute, type) {
+      return {
+        hour,
+        minute,
+        type,
+        answer: timeToText(hour, minute)
+      };
+    }
+
+    function generateQuestionBank() {
+      const bank = [];
+
+      // 100 mixed time exercises using 5-minute steps.
+      // The minute hand can point to 12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, or 11.
+      const minuteSteps = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+      for (let i = 0; i < 100; i++) {
+        const hour = Math.floor(Math.random() * 12) + 1;
+        const minute = minuteSteps[Math.floor(Math.random() * minuteSteps.length)];
+        bank.push(createExercise(hour, minute, "Time"));
+      }
+
+      return shuffle(bank);
+    }
+
+    function generateGameExercises() {
+      const wholeHourBank = generateQuestionBank();
+      const firstTen = wholeHourBank.slice(0, 10);
+
+      const challengeOptions = [];
+      for (let hour = 1; hour <= 12; hour++) {
+        challengeOptions.push(createExercise(hour, 15, "Challenge"));
+        challengeOptions.push(createExercise(hour, 30, "Challenge"));
+        challengeOptions.push(createExercise(hour, 45, "Challenge"));
+      }
+
+      const challengeFive = shuffle(challengeOptions).slice(0, 5);
+      return [...firstTen, ...challengeFive];
+    }
+
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    let previousHourAngle = 0;
+    let previousMinuteAngle = 0;
+
+    function animateClock(hour, minute) {
+      const hourHand = document.getElementById("hourHand");
+      const minuteHand = document.getElementById("minuteHand");
+
+      const hourAngle = ((hour % 12) * 30) + (minute * 0.5);
+      const minuteAngle = minute * 6;
+
+      // Add full rotations so both hands visibly move forward instead of jumping backward.
+      while (hourAngle + 360 <= previousHourAngle) previousHourAngle -= 360;
+      while (minuteAngle + 360 <= previousMinuteAngle) previousMinuteAngle -= 360;
+
+      const adjustedHourAngle = hourAngle < previousHourAngle ? hourAngle + 360 : hourAngle;
+      const adjustedMinuteAngle = minuteAngle <= previousMinuteAngle ? minuteAngle + 360 : minuteAngle;
+
+      hourHand.style.transition = "transform 0.8s ease-in-out";
+      minuteHand.style.transition = "transform 0.8s ease-in-out";
+      hourHand.style.transform = `rotate(${adjustedHourAngle}deg)`;
+      minuteHand.style.transform = `rotate(${adjustedMinuteAngle}deg)`;
+
+      previousHourAngle = adjustedHourAngle;
+      previousMinuteAngle = adjustedMinuteAngle;
+    }
+
+    function makeOptions(correctAnswer, type) {
+      let pool = [];
+
+      if (type === "Time") {
+        const minuteSteps = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+        for (let h = 1; h <= 12; h++) {
+          for (let m of minuteSteps) {
+            pool.push(timeToText(h, m));
+          }
+        }
+      } else {
+        for (let h = 1; h <= 12; h++) {
+          pool.push(`quarter past ${h}`);
+          pool.push(`half past ${h}`);
+          pool.push(`quarter to ${h}`);
+        }
+      }
+
+      const wrong = shuffle(pool.filter(item => item !== correctAnswer)).slice(0, 3);
+      return shuffle([correctAnswer, ...wrong]);
+    }
+
+    function showQuestion() {
+      const current = exercises[currentIndex];
+      answeredCorrectly = false;
+      messageEl.textContent = "";
+      nextBtn.disabled = true;
+      optionsEl.innerHTML = "";
+      mascot.textContent = mascots[Math.floor(Math.random() * mascots.length)];
+
+      questionCountEl.textContent = currentIndex + 1;
+      roundNameEl.textContent = current.type === "Time" ? "Read the Clock" : "Bonus Time";
+      progressFill.style.width = `${(currentIndex / exercises.length) * 100}%`;
+
+      // Both clock arms move for every question.
+      // In Part 1, the minute hand can point to 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, or 55.
+      // In the bonus round, both hands move for quarter past, half past, and quarter to.
+      animateClock(current.hour, current.minute);
+
+      const options = makeOptions(current.answer, current.type);
+      options.forEach(optionText => {
+        const btn = document.createElement("button");
+        btn.className = "option";
+        btn.textContent = optionText;
+        btn.onclick = () => checkAnswer(btn, optionText, current.answer);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(button, selected, correct) {
+      if (answeredCorrectly) return;
+
+      if (selected === correct) {
+        answeredCorrectly = true;
+        score++;
+        scoreEl.textContent = score;
+        button.classList.add("correct");
+        messageEl.textContent = praise[Math.floor(Math.random() * praise.length)];
+        nextBtn.disabled = false;
+
+        document.querySelectorAll(".option").forEach(btn => {
+          btn.disabled = true;
+          if (btn.textContent === correct) btn.classList.add("correct");
+        });
+      } else {
+        button.classList.add("wrong");
+        messageEl.textContent = "Try again! Look carefully at the clock. 💪";
+        setTimeout(() => button.classList.remove("wrong"), 450);
+      }
+    }
+
+    function nextQuestion() {
+      if (!answeredCorrectly) return;
+      currentIndex++;
+
+      if (currentIndex >= exercises.length) {
+        finishGame();
+      } else {
+        showQuestion();
+      }
+    }
+
+    function finishGame() {
+      playArea.style.display = "none";
+      finishScreen.style.display = "block";
+      progressFill.style.width = "100%";
+      finalScore.textContent = score;
+    }
+
+    function startGame() {
+      exercises = generateGameExercises();
+      currentIndex = 0;
+      score = 0;
+      answeredCorrectly = false;
+      scoreEl.textContent = score;
+      document.getElementById("totalQuestions").textContent = exercises.length;
+      playArea.style.display = "grid";
+      finishScreen.style.display = "none";
+      showQuestion();
+    }
+
+    nextBtn.addEventListener("click", nextQuestion);
+    restartBtn.addEventListener("click", startGame);
+
+    buildClockFace();
+    startGame();
+  </script>
+</body>
+</html>
